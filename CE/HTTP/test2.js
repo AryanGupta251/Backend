@@ -4,13 +4,11 @@ const port=3000;
 const server=http.createServer(async(req,res)=>{
     console.log('New request recieved');
     res.writeHead(200,{'Content-Type':'text/html'});
-    // const response=await fetch("https://dummyjson.com/products")
-    // const data=await response.json();
-    const response=await axios.get("https://dummyjson.com/products")
-    const productsdata=response.data.products;
+    const response=await axios.get("https://api.github.com/search/users?q=location:ghaziabad")
+    const userimg=response.data.items;
     let frontdata=`<html><head></head><body>`
-    productsdata.forEach((product)=>{
-        frontdata+=`<div><img src="${product.thumbnail}"></div>`
+    userimg.forEach((items)=>{
+        frontdata+=`<div><img src="${items.avatar_url}"></div>`
     });
     frontdata +=`<body></html>`
     res.end(frontdata);
